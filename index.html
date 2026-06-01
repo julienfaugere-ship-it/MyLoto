@@ -269,6 +269,41 @@
     .special-item { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 10px; text-align: center; }
     .special-item .label { font-weight: 500; color: var(--text-primary); font-size: 13px; }
     .special-item .desc { color: var(--text-secondary); font-size: 11px; margin-top: 2px; }
+
+    /* ── MODAL GAGNANT ──────────────────────────────────────────── */
+    .modal-bg {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--bg-primary);
+      border-radius: var(--radius-xl);
+      border: 0.5px solid var(--border-md);
+      padding: 2rem 2rem 1.5rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+    .modal-emoji { font-size: 56px; line-height: 1; margin-bottom: 12px; }
+    .modal-titre { font-size: 22px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .modal-sous { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
+    .modal-score { display: inline-block; background: var(--bg-secondary); border-radius: var(--radius-md); padding: 5px 16px; font-size: 13px; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .modal-btns { display: flex; flex-direction: column; gap: 10px; }
+    .modal-btns button { width: 100%; padding: 12px; font-size: 15px; }
+    .modal-btns .btn-continue { background: var(--bg-secondary); border-color: var(--border-md); }
+    @keyframes pop-in {
+      0% { transform: scale(0.8); opacity: 0; }
+      70% { transform: scale(1.04); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .modal-bg.open .modal { animation: pop-in 0.3s cubic-bezier(.4,0,.2,1) both; }
   </style>
 </head>
 <body>
@@ -366,6 +401,20 @@
   </div>
 
 </div><!-- /app -->
+
+<!-- MODAL GAGNANT -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-emoji" id="modalEmoji">🎉</div>
+    <div class="modal-titre" id="modalTitre">Quine !</div>
+    <div class="modal-sous" id="modalSous">Nous avons un gagnant !</div>
+    <div class="modal-score" id="modalScore">Tirage en cours — <span id="modalNb">0</span> numéros sortis</div>
+    <div class="modal-btns">
+      <button class="primary" onclick="nouvellePartie()"><i class="ti ti-refresh"></i> Nouvelle partie</button>
+      <button class="btn-continue" onclick="fermerModal()"><i class="ti ti-player-play"></i> Continuer le tirage</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ── Météo ────────────────────────────────────────────────────────────────────
@@ -631,8 +680,7 @@ function tirerNumero() {
   else if (tires.length === 45) special = 'Mi-chemin ! 45 numéros tirés !';
   else if (tires.length === 90) {
     special = 'Dernier numéro ! La partie est terminée !';
-    document.getElementById('btnTirer').disabled = true;
-    document.getElementById('btnRejouer').style.display = 'inline-block';
+    setTimeout(finDePartie, 2200);
   }
   ann.textContent = special;
 
@@ -642,25 +690,23 @@ function tirerNumero() {
   parler(blagues[n] || 'Le numéro ' + n + ' !');
 }
 
-// ── Annonces ─────────────────────────────────────────────────────────────────
-function annoncerQuine() {
-  parler('QUINE ! Nous avons un QUINE ! Félicitations ! Une ligne complète au CH de Perpignan ! Bravo !');
-  const a = document.getElementById('announce');
-  a.textContent = 'QUINE ! Bravo !'; a.className = 'announce quine';
+// ── Modal gagnant ─────────────────────────────────────────────────────────────
+function ouvrirModal(emoji, titre, sous, speech) {
+  document.getElementById('modalEmoji').textContent = emoji;
+  document.getElementById('modalTitre').textContent = titre;
+  document.getElementById('modalSous').textContent = sous;
+  document.getElementById('modalNb').textContent = tires.length;
+  document.getElementById('modalBg').classList.add('open');
+  parler(speech);
 }
-function annoncerDoubleQuine() {
-  parler('DOUBLE QUINE ! Incroyable ! Deux lignes complètes ! Quel joueur extraordinaire ce soir !');
-  const a = document.getElementById('announce');
-  a.textContent = 'DOUBLE QUINE ! Fantastique !'; a.className = 'announce quine';
+function fermerModal() {
+  document.getElementById('modalBg').classList.remove('open');
 }
-function annoncerCarton() {
-  parler('CARTON PLEIN ! CARTON PLEIN ! Nous avons un carton plein ce soir au loto du CH de Perpignan ! Toutes nos félicitations au gagnant ! Bravissimo !');
-  const a = document.getElementById('announce');
-  a.textContent = 'CARTON PLEIN ! GAGNANT !'; a.className = 'announce carton';
+function nouvellePartie() {
+  fermerModal();
+  setTimeout(resetPartie, 220);
 }
-
-// ── Nouvelle partie ───────────────────────────────────────────────────────────
-function rejouer() {
+function resetPartie() {
   restants = Array.from({length:90}, (_, i) => i + 1);
   tires = [];
   document.getElementById('bigNum').textContent = '—';
@@ -676,6 +722,37 @@ function rejouer() {
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   initGrille();
 }
+
+// ── Annonces ─────────────────────────────────────────────────────────────────
+function annoncerQuine() {
+  const a = document.getElementById('announce');
+  a.textContent = 'QUINE ! Bravo !'; a.className = 'announce quine';
+  ouvrirModal('🏆', 'QUINE !', 'Une ligne complète — félicitations !',
+    'QUINE ! Nous avons un QUINE ! Félicitations ! Une ligne complète au CH de Perpignan ! Bravo !');
+}
+function annoncerDoubleQuine() {
+  const a = document.getElementById('announce');
+  a.textContent = 'DOUBLE QUINE ! Fantastique !'; a.className = 'announce quine';
+  ouvrirModal('🥇', 'DOUBLE QUINE !', 'Deux lignes complètes — incroyable !',
+    'DOUBLE QUINE ! Incroyable ! Deux lignes complètes ! Quel joueur extraordinaire ce soir !');
+}
+function annoncerCarton() {
+  const a = document.getElementById('announce');
+  a.textContent = 'CARTON PLEIN ! GAGNANT !'; a.className = 'announce carton';
+  ouvrirModal('🎊', 'CARTON PLEIN !', 'Les 15 numéros — grand gagnant ce soir !',
+    'CARTON PLEIN ! CARTON PLEIN ! Nous avons un carton plein ce soir au loto du CH de Perpignan ! Toutes nos félicitations au gagnant ! Bravissimo !');
+}
+
+// ── Fin de partie (90 numéros) ────────────────────────────────────────────────
+function finDePartie() {
+  document.getElementById('btnTirer').disabled = true;
+  document.getElementById('btnRejouer').style.display = 'inline-block';
+  ouvrirModal('🎰', 'Partie terminée !', 'Les 90 numéros ont été tirés.',
+    'La partie est terminée ! Les quatre-vingt-dix numéros ont été tirés. Bravo à tous les participants du CH de Perpignan !');
+}
+
+// ── Rejouer (bouton secondaire dans le tirage) ────────────────────────────────
+function rejouer() { resetPartie(); }
 
 // ── Démarrage ─────────────────────────────────────────────────────────────────
 initGrille();
