@@ -11,19 +11,21 @@
     :root {
       --bg-primary: #ffffff;
       --bg-secondary: #f5f5f0;
-      --bg-tertiary: #eeede8;
+      --bg-tertiary: #eeecea;
       --bg-info: #e6f1fb;
       --bg-success: #eaf3de;
       --text-primary: #1a1a18;
       --text-secondary: #6b6b67;
       --text-info: #0c447c;
       --text-success: #27500a;
-      --border: rgba(0,0,0,0.12);
-      --border-md: rgba(0,0,0,0.22);
+      --border: rgba(0,0,0,0.11);
+      --border-md: rgba(0,0,0,0.20);
       --radius-md: 8px;
-      --radius-lg: 12px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
       --blue: #185FA5;
       --blue-dark: #0C447C;
+      --blue-light: #e6f1fb;
       --orange: #D85A30;
       --green: #0F6E56;
       --pink: #993556;
@@ -34,16 +36,17 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --bg-primary: #1e1e1c;
-        --bg-secondary: #2a2a27;
-        --bg-tertiary: #242422;
+        --bg-secondary: #272724;
+        --bg-tertiary: #1a1a18;
         --bg-info: #042c53;
         --bg-success: #173404;
         --text-primary: #f0efe8;
-        --text-secondary: #a0a09a;
+        --text-secondary: #9a9a94;
         --text-info: #85b7eb;
         --text-success: #c0dd97;
-        --border: rgba(255,255,255,0.1);
-        --border-md: rgba(255,255,255,0.2);
+        --border: rgba(255,255,255,0.09);
+        --border-md: rgba(255,255,255,0.18);
+        --blue-light: #0c2a42;
       }
     }
 
@@ -52,54 +55,105 @@
       background: var(--bg-tertiary);
       color: var(--text-primary);
       min-height: 100vh;
-      padding: 1rem;
+      padding: 1rem 1rem 2rem;
     }
 
     .app { max-width: 900px; margin: 0 auto; }
 
+    /* ── HEADER MODERNE ─────────────────────────────────────────── */
     .header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      padding: 1.5rem;
-      background: var(--bg-primary);
-      border-radius: var(--radius-lg);
-      border: 0.5px solid var(--border);
+      position: relative;
+      margin-bottom: 1.25rem;
+      padding: 0;
+      background: var(--blue);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
     }
-    .header h1 { font-size: 24px; font-weight: 500; color: var(--text-primary); }
-    .header .subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
-
-    .meteo {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-      background: var(--bg-info);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 6px 14px;
+    .header-inner {
+      display: flex;
+      align-items: stretch;
+      min-height: 140px;
+    }
+    .header-left {
+      flex: 1;
+      padding: 1.6rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+    .header-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .header-title {
+      font-size: 26px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.15;
+    }
+    .header-title span { color: rgba(255,255,255,0.75); font-weight: 400; }
+    .header-sub {
       font-size: 13px;
-      color: var(--text-secondary);
+      color: rgba(255,255,255,0.65);
+      margin-top: 2px;
     }
-    .meteo strong { color: var(--text-info); font-weight: 500; }
+    .header-right {
+      width: 190px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.07);
+      border-left: 1px solid rgba(255,255,255,0.1);
+      padding: 1.2rem 1rem;
+    }
+    @media(max-width:560px) {
+      .header-inner { flex-direction: column; }
+      .header-right { width: 100%; border-left: none; border-top: 1px solid rgba(255,255,255,0.1); flex-direction: row; padding: 0.9rem 1.4rem; justify-content: flex-start; gap: 14px; }
+    }
 
+    /* météo SVG */
+    .meteo-icon { position: relative; width: 64px; height: 64px; }
+    .meteo-icon svg { width: 100%; height: 100%; }
+    .meteo-data { text-align: center; }
+    .meteo-temp { font-size: 22px; font-weight: 600; color: #fff; line-height: 1; }
+    .meteo-cond { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+    .meteo-detail { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+    /* Sun animation */
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    @keyframes pulse-cloud { 0%,100%{opacity:1} 50%{opacity:.7} }
+    @keyframes rain-drop { 0%{transform:translateY(-4px);opacity:0} 60%{opacity:1} 100%{transform:translateY(6px);opacity:0} }
+    .sun-rays { transform-origin: 32px 28px; animation: spin-slow 12s linear infinite; }
+    .cloud-anim { animation: pulse-cloud 3s ease-in-out infinite; }
+    .drop1 { animation: rain-drop 1.4s ease-in infinite; }
+    .drop2 { animation: rain-drop 1.4s ease-in 0.4s infinite; }
+    .drop3 { animation: rain-drop 1.4s ease-in 0.8s infinite; }
+
+    /* ── WISH BAR ───────────────────────────────────────────────── */
     .wish {
       background: var(--bg-info);
-      border: 0.5px solid var(--border-md);
+      border: 0.5px solid rgba(24,95,165,0.2);
       border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      margin-bottom: 1rem;
-      text-align: center;
+      padding: 0.9rem 1.25rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .wish p { font-size: 16px; color: var(--text-info); font-weight: 500; }
-    .wish span { font-size: 13px; color: var(--text-secondary); }
+    .wish-icon { font-size: 22px; color: var(--blue); flex-shrink: 0; }
+    .wish p { font-size: 15px; color: var(--text-info); font-weight: 500; }
+    .wish span { font-size: 12px; color: var(--text-secondary); display: block; margin-top: 1px; }
 
-    .grid2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    @media(max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
+    /* ── LAYOUT ─────────────────────────────────────────────────── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media(max-width:620px) { .grid2 { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--bg-primary);
@@ -108,41 +162,42 @@
       padding: 1rem 1.25rem;
     }
     .card-title {
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 10px;
+      font-weight: 600;
       color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.09em;
       margin-bottom: 12px;
     }
     .mb1 { margin-bottom: 1rem; }
 
     .big-number {
-      font-size: 80px;
-      font-weight: 500;
+      font-size: 86px;
+      font-weight: 700;
       text-align: center;
       line-height: 1;
-      padding: 0.75rem 0;
+      padding: 0.6rem 0;
       color: var(--blue);
+      letter-spacing: -2px;
     }
 
     .joke {
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--text-secondary);
       text-align: center;
       font-style: italic;
       min-height: 44px;
       padding: 0 0.5rem;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .announce {
       font-size: 15px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text-primary);
       text-align: center;
-      min-height: 28px;
-      margin-top: 8px;
+      min-height: 26px;
+      margin-top: 6px;
     }
     .announce.quine { color: var(--green); }
     .announce.carton { color: var(--orange); }
@@ -151,21 +206,15 @@
       background: var(--bg-success);
       border: 0.5px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 6px 12px;
-      font-size: 13px;
+      padding: 5px 12px;
+      font-size: 12px;
       color: var(--text-success);
       text-align: center;
       margin-top: 8px;
       display: none;
     }
 
-    .btn-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    .btn-row { display: flex; gap: 8px; margin-top: 12px; justify-content: center; flex-wrap: wrap; }
 
     button {
       cursor: pointer;
@@ -173,123 +222,102 @@
       background: var(--bg-primary);
       color: var(--text-primary);
       border-radius: var(--radius-md);
-      padding: 8px 18px;
+      padding: 9px 18px;
       font-size: 14px;
       font-weight: 500;
       transition: background 0.15s, transform 0.1s;
       font-family: inherit;
+      line-height: 1;
     }
     button:hover { background: var(--bg-secondary); }
     button:active { transform: scale(0.97); }
-    button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    button:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
     button.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
     button.primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
     button.danger { background: var(--orange); color: #fff; border-color: var(--orange); }
     button.danger:hover { background: #993C1D; border-color: #993C1D; }
 
-    .progress-bar {
-      background: var(--bg-secondary);
-      border-radius: 99px;
-      height: 6px;
-      margin-top: 12px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 99px;
-      background: var(--blue);
-      transition: width 0.4s;
-    }
-    .counter {
-      font-size: 13px;
-      color: var(--text-secondary);
-      text-align: center;
-      margin-top: 6px;
-    }
+    .progress-bar { background: var(--bg-secondary); border-radius: 99px; height: 5px; margin-top: 12px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 99px; background: var(--blue); transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+    .counter { font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 5px; }
 
-    .grille {
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      gap: 4px;
-    }
+    /* grille */
+    .grille { display: grid; grid-template-columns: repeat(9, 1fr); gap: 3px; }
     .ball {
       aspect-ratio: 1;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
       border: 0.5px solid var(--border);
       color: var(--text-secondary);
       background: var(--bg-secondary);
-      transition: all 0.3s;
+      transition: all 0.25s;
     }
     .ball.drawn { color: #fff; }
-    .ball.last { color: #fff; transform: scale(1.18); }
+    .ball.last { color: #fff; transform: scale(1.2); box-shadow: 0 0 0 3px rgba(216,90,48,0.25); }
 
-    .history {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      max-height: 120px;
-      overflow-y: auto;
-    }
-    .hball {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 500;
-      flex-shrink: 0;
-      color: #fff;
-    }
+    /* historique */
+    .history { display: flex; flex-wrap: wrap; gap: 5px; max-height: 120px; overflow-y: auto; }
+    .hball { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex-shrink: 0; color: #fff; }
 
-    .special-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      font-size: 13px;
-    }
-    .special-item {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-md);
-      padding: 10px;
-      text-align: center;
-    }
-    .special-item .label { font-weight: 500; color: var(--text-primary); }
-    .special-item .desc { color: var(--text-secondary); font-size: 12px; margin-top: 2px; }
-
-    footer {
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 12px;
-      color: var(--text-secondary);
-      padding-bottom: 1rem;
-    }
+    /* spécial */
+    .special-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; margin-bottom: 12px; }
+    .special-item { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 10px; text-align: center; }
+    .special-item .label { font-weight: 500; color: var(--text-primary); font-size: 13px; }
+    .special-item .desc { color: var(--text-secondary); font-size: 11px; margin-top: 2px; }
   </style>
 </head>
 <body>
 <div class="app">
 
+  <!-- HEADER MODERNE -->
   <div class="header">
-    <h1><i class="ti ti-circle-dot"></i> Loto du CH de Perpignan</h1>
-    <div class="subtitle">Soirée loto — Bonne chance à tout le monde !</div>
-    <div class="meteo">
-      <i class="ti ti-sun"></i>
-      <span id="meteoText">Chargement de la météo...</span>
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="header-eyebrow">Centre Hospitalier de Perpignan</div>
+        <div class="header-title">Soirée<br><span>Grande</span> Tombola</div>
+        <div class="header-sub">Bonne chance à toute l'équipe du CH !</div>
+      </div>
+      <div class="header-right" id="headerMeteo">
+        <div class="meteo-icon" id="meteoSvg">
+          <!-- icône par défaut : soleil -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g class="sun-rays" stroke="rgba(255,220,60,0.85)" stroke-width="2.5" stroke-linecap="round">
+              <line x1="32" y1="6" x2="32" y2="12"/>
+              <line x1="32" y1="52" x2="32" y2="58"/>
+              <line x1="6" y1="32" x2="12" y2="32"/>
+              <line x1="52" y1="32" x2="58" y2="32"/>
+              <line x1="13.5" y1="13.5" x2="17.8" y2="17.8"/>
+              <line x1="46.2" y1="46.2" x2="50.5" y2="50.5"/>
+              <line x1="50.5" y1="13.5" x2="46.2" y2="17.8"/>
+              <line x1="17.8" y1="46.2" x2="13.5" y2="50.5"/>
+            </g>
+            <circle cx="32" cy="32" r="11" fill="rgba(255,220,60,0.95)"/>
+          </svg>
+        </div>
+        <div class="meteo-data">
+          <div class="meteo-temp" id="meteoTemp">--°</div>
+          <div class="meteo-cond" id="meteoCond">Perpignan</div>
+          <div class="meteo-detail" id="meteoDetail"></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- WISH -->
   <div class="wish">
-    <p>Bonne chance à toute l'équipe du CH de Perpignan !</p>
-    <span>Que les meilleures boules roulent pour vous ce soir</span>
+    <i class="ti ti-confetti wish-icon" aria-hidden="true"></i>
+    <div>
+      <p>Bonne chance à tous les membres du CH de Perpignan !</p>
+      <span>Que les meilleures boules roulent pour vous ce soir</span>
+    </div>
   </div>
 
+  <!-- TIRAGE + GRILLE -->
   <div class="grid2">
     <div class="card">
       <div class="card-title">Tirage en cours</div>
@@ -315,148 +343,222 @@
     </div>
   </div>
 
+  <!-- HISTORIQUE -->
   <div class="card mb1">
-    <div class="card-title">Numéros tirés (ordre de sortie)</div>
+    <div class="card-title">Numéros tirés — ordre de sortie</div>
     <div class="history" id="history"></div>
   </div>
 
-  <div class="card mb1">
+  <!-- ANNONCES SPÉCIALES -->
+  <div class="card">
     <div class="card-title">Annonces spéciales</div>
-    <div class="special-grid" style="margin-bottom:12px;">
+    <div class="special-grid">
       <div class="special-item"><div class="label">Quine</div><div class="desc">5 numéros sur une ligne</div></div>
       <div class="special-item"><div class="label">Double quine</div><div class="desc">2 lignes complètes</div></div>
       <div class="special-item"><div class="label">Carton plein</div><div class="desc">Les 15 numéros du carton</div></div>
       <div class="special-item"><div class="label" style="color:var(--orange)">Super carton</div><div class="desc">En moins de 45 numéros !</div></div>
     </div>
     <div class="btn-row">
-      <button onclick="annoncerQuine()"><i class="ti ti-trophy"></i> Annoncer Quine !</button>
+      <button onclick="annoncerQuine()"><i class="ti ti-trophy"></i> Quine !</button>
       <button onclick="annoncerDoubleQuine()"><i class="ti ti-trophy"></i> Double Quine !</button>
       <button onclick="annoncerCarton()"><i class="ti ti-confetti"></i> Carton Plein !</button>
     </div>
   </div>
 
-  <footer>Loto CH Perpignan &mdash; Application créée avec Claude · <span id="dateFooter"></span></footer>
-</div>
+</div><!-- /app -->
 
 <script>
-// ─── Météo ──────────────────────────────────────────────────────────────────
+// ── Météo ────────────────────────────────────────────────────────────────────
+const meteoIcons = {
+  sunny: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g class="sun-rays" stroke="rgba(255,210,40,0.9)" stroke-width="2.5" stroke-linecap="round">
+      <line x1="32" y1="5" x2="32" y2="12"/><line x1="32" y1="52" x2="32" y2="59"/>
+      <line x1="5" y1="32" x2="12" y2="32"/><line x1="52" y1="32" x2="59" y2="32"/>
+      <line x1="12.6" y1="12.6" x2="17.5" y2="17.5"/><line x1="46.5" y1="46.5" x2="51.4" y2="51.4"/>
+      <line x1="51.4" y1="12.6" x2="46.5" y2="17.5"/><line x1="17.5" y1="46.5" x2="12.6" y2="51.4"/>
+    </g>
+    <circle cx="32" cy="32" r="12" fill="rgba(255,210,40,0.95)"/>
+  </svg>`,
+  partly_cloudy: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g class="sun-rays" stroke="rgba(255,210,40,0.85)" stroke-width="2.2" stroke-linecap="round">
+      <line x1="22" y1="8" x2="22" y2="14"/><line x1="8" y1="22" x2="14" y2="22"/>
+      <line x1="11.5" y1="11.5" x2="15.8" y2="15.8"/><line x1="32" y1="11.5" x2="28" y2="15.5"/>
+    </g>
+    <circle cx="22" cy="22" r="10" fill="rgba(255,210,40,0.9)"/>
+    <g class="cloud-anim">
+      <rect x="16" y="34" width="34" height="18" rx="9" fill="rgba(255,255,255,0.85)"/>
+      <circle cx="26" cy="36" r="9" fill="rgba(255,255,255,0.85)"/>
+      <circle cx="38" cy="34" r="10" fill="rgba(255,255,255,0.85)"/>
+    </g>
+  </svg>`,
+  cloudy: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g class="cloud-anim">
+      <rect x="10" y="26" width="44" height="22" rx="11" fill="rgba(255,255,255,0.7)"/>
+      <circle cx="24" cy="28" r="12" fill="rgba(255,255,255,0.7)"/>
+      <circle cx="40" cy="25" r="14" fill="rgba(255,255,255,0.7)"/>
+    </g>
+  </svg>`,
+  rainy: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g class="cloud-anim">
+      <rect x="10" y="16" width="44" height="20" rx="10" fill="rgba(255,255,255,0.7)"/>
+      <circle cx="24" cy="18" r="11" fill="rgba(255,255,255,0.7)"/>
+      <circle cx="40" cy="15" r="13" fill="rgba(255,255,255,0.7)"/>
+    </g>
+    <line class="drop1" x1="22" y1="42" x2="20" y2="50" stroke="rgba(130,200,255,0.9)" stroke-width="2.5" stroke-linecap="round"/>
+    <line class="drop2" x1="32" y1="42" x2="30" y2="50" stroke="rgba(130,200,255,0.9)" stroke-width="2.5" stroke-linecap="round"/>
+    <line class="drop3" x1="42" y1="42" x2="40" y2="50" stroke="rgba(130,200,255,0.9)" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>`,
+  stormy: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g class="cloud-anim">
+      <rect x="8" y="14" width="48" height="22" rx="11" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="22" cy="16" r="12" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="42" cy="13" r="14" fill="rgba(255,255,255,0.6)"/>
+    </g>
+    <polyline points="34,38 28,50 34,50 28,62" stroke="rgba(255,230,60,0.95)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>`,
+  night: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M38 12 C28 14 20 24 22 36 C24 48 36 56 48 52 C36 56 20 48 18 34 C16 20 28 10 38 12Z" fill="rgba(200,220,255,0.9)"/>
+    <circle cx="48" cy="16" r="2" fill="rgba(255,255,255,0.8)"/>
+    <circle cx="16" cy="28" r="1.5" fill="rgba(255,255,255,0.6)"/>
+    <circle cx="54" cy="36" r="1.5" fill="rgba(255,255,255,0.6)"/>
+  </svg>`
+};
+
+function wmoToIcon(code, isDay) {
+  if (!isDay) return 'night';
+  if (code === 0) return 'sunny';
+  if (code <= 2) return 'partly_cloudy';
+  if (code <= 48) return 'cloudy';
+  if (code <= 67) return 'rainy';
+  if (code <= 77) return 'rainy';
+  return 'stormy';
+}
+function wmoToText(code) {
+  if (code === 0) return 'Ensoleillé';
+  if (code <= 2) return 'Partiellement nuageux';
+  if (code <= 3) return 'Nuageux';
+  if (code <= 48) return 'Brouillard';
+  if (code <= 57) return 'Bruine';
+  if (code <= 67) return 'Pluvieux';
+  if (code <= 77) return 'Neige';
+  return 'Orageux';
+}
+
 async function chargerMeteo() {
   try {
     const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.6977&longitude=2.8956&current_weather=true&daily=temperature_2m_max,precipitation_probability_max&timezone=Europe%2FParis&forecast_days=1');
     const d = await r.json();
-    const temp = Math.round(d.current_weather.temperature);
+    const cw   = d.current_weather;
+    const temp = Math.round(cw.temperature);
     const max  = Math.round(d.daily.temperature_2m_max[0]);
     const rain = d.daily.precipitation_probability_max[0];
-    const wc   = d.current_weather.weathercode;
-    let cond = wc === 0 ? 'Ensoleillé' : wc <= 3 ? 'Partiellement nuageux' : wc <= 67 ? 'Pluvieux' : 'Nuageux';
-    document.getElementById('meteoText').innerHTML =
-      'Perpignan &mdash; <strong>' + temp + '°C</strong>, ' + cond +
-      ' · Max <strong>' + max + '°C</strong>' +
-      (rain > 30 ? ' · Pluie <strong>' + rain + '%</strong>' : '');
+    const isDay = cw.is_day === 1;
+    const iconKey = wmoToIcon(cw.weathercode, isDay);
+    document.getElementById('meteoSvg').innerHTML = meteoIcons[iconKey] || meteoIcons.sunny;
+    document.getElementById('meteoTemp').textContent = temp + '°C';
+    document.getElementById('meteoCond').textContent = wmoToText(cw.weathercode);
+    document.getElementById('meteoDetail').textContent = 'Max ' + max + '°C' + (rain > 20 ? ' · Pluie ' + rain + '%' : '');
   } catch(e) {
-    document.getElementById('meteoText').textContent = 'Perpignan, Pyrénées-Orientales (66)';
+    document.getElementById('meteoCond').textContent = 'Pyrénées-Orientales';
   }
 }
 chargerMeteo();
 
-// Date footer
-document.getElementById('dateFooter').textContent = new Date().toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'});
-
-// ─── Blagues par numéro ──────────────────────────────────────────────────────
+// ── Blagues ──────────────────────────────────────────────────────────────────
 const blagues = {
-  1: "Le numéro 1 ! Comme le CH de Perpignan — toujours le premier pour ses patients !",
-  2: "Le 2 ! Deux mains, deux pieds... et deux aspirines pour les soignants après une garde de nuit !",
-  3: "Le 3 ! Les trois mousquetaires : le médecin, l'infirmier, et la machine à café en panne !",
-  4: "Le 4 ! Quatre saisons à Perpignan : chaud, très chaud, encore chaud, et Noël !",
-  5: "Le 5 ! Cinq minutes de pause... c'est théorique aux urgences !",
-  6: "Le 6 ! Six heures du matin... l'heure où les infirmières de nuit comptent les secondes !",
-  7: "Le 7 ! Sept jours sur sept, l'hôpital ne ferme jamais. Chapeau les soignants !",
-  8: "Le 8 ! Comme les huit heures de sommeil dont tout le monde rêve ici !",
-  9: "Le 9 ! Numéro 9... comme la 9ème tasse de café de la journée — médicale celle-là !",
-  10: "Dix ! La dizaine ! Dix doigts pour soigner, dix fois merci à toute l'équipe !",
-  11: "Onze ! Les deux bâtons ! Deux piqûres de rappel... n'oubliez pas votre carnet de santé !",
-  12: "Douze ! La douzaine d'œufs ! Autant de collègues qu'on aime autour de la table ce soir !",
-  13: "Treize ! Le chiffre porte-bonheur du CH de Perpignan — et ce soir ça va porter chance !",
-  14: "Quatorze ! Juillet, fête nationale ! On fête aussi les agents hospitaliers, héros du quotidien !",
-  15: "Quinze ! Un quart d'heure ! C'est le temps d'attente théorique aux urgences... théorique !",
-  16: "Seize ! L'âge de raison... pas forcément celui qu'on a en salle de garde !",
-  17: "Dix-sept ! Un de plus que seize, un de moins que dix-huit, parfaitement inutile comme information !",
-  18: "Dix-huit ! La majorité ! Ce soir tout le monde est majeur et vacciné... enfin j'espère !",
-  19: "Dix-neuf ! Juste avant la vingtaine ! Comme être en fin de garde — la fin approche !",
-  20: "Vingt ! La belle vingtaine ! Vingt ans de carrière ou vingt minutes de trajet — on prend les deux !",
-  21: "Vingt et un ! Blackjack ! Ce soir on mise sur le carton plein, pas sur le casino !",
-  22: "Vingt-deux ! Les deux canes ! Attention aux deux béquilles — le kiné prend note !",
-  23: "Vingt-trois ! Les voilà ! Vingt-trois heures... l'heure où la cafète ferme et la détresse commence !",
-  24: "Vingt-quatre ! 24h/24 comme l'hôpital ! Respect total à ceux qui assurent la nuit !",
-  25: "Vingt-cinq ! Noël avant l'heure ! Un cadeau pour les uns, une longue garde pour les autres !",
-  26: "Vingt-six ! Deux fois treize ! Double chance pour ce soir, on y croit !",
-  27: "Vingt-sept ! Presque trente ! Comme les températures à Perpignan... même en octobre !",
-  28: "Vingt-huit ! Les jours de février — le mois le plus court, comme certaines réunions... rarement !",
-  29: "Vingt-neuf ! L'année bissextile ! Un jour de plus par an pour souffler... quelle générosité !",
-  30: "Trente ! La trentaine ! Ni trop jeune ni trop vieux pour gagner ce carton plein !",
-  31: "Trente et un ! Le dernier jour du mois ! Encore une garde à assurer avant le repos !",
-  32: "Trente-deux ! Les dents ! Le dentiste du coin espère que vous avez bien brossé ce soir !",
-  33: "Trente-trois ! Dites trente-trois ! Classique... C'est la phrase préférée des médecins ici !",
-  34: "Trente-quatre ! Le département de l'Hérault, voisin de l'ennemi... mais on les aime quand même !",
-  35: "Trente-cinq ! Les 35 heures ! Un concept mystérieux pour certains soignants des urgences !",
-  36: "Trente-six ! Trente-six chandelles ! C'est ce qu'on voit parfois en fin de garde de 12 heures !",
-  37: "Trente-sept ! La température normale du corps ! Ce soir on est tous en bonne santé, parfait !",
-  38: "Trente-huit ! Légère fièvre ! Un doliprane et une bonne nuit — ordonnance offerte !",
-  39: "Trente-neuf ! Fièvre sérieuse ! Quelqu'un appelle les urgences ? On est au bon endroit !",
-  40: "Quarante ! La quarantaine ! COVID ou pas, on se souvient tous de ce mot maintenant !",
-  41: "Quarante et un ! Fièvre à 41 ! Là on s'inquiète... heureusement on est entourés de pros !",
-  42: "Quarante-deux ! La réponse à tout ! Merci Douglas Adams, et merci à l'équipe soignante !",
-  43: "Quarante-trois ! Trois petits tours et puis s'en vont... comme les visiteurs à l'heure des repas !",
-  44: "Quarante-quatre ! Les quatre-quatre ! Le véhicule du SMUR dans les Pyrénées-Orientales !",
-  45: "Quarante-cinq ! Mi-parcours ! On est à la moitié des 90 numéros. Tenez bon, gardez vos cartons !",
-  46: "Quarante-six ! Une belle annonce ! Le carton plein se prépare peut-être !",
-  47: "Quarante-sept ! Presque la cinquantaine ! Comme la première ride qu'on nie soigneusement !",
-  48: "Quarante-huit heures ! La garde la plus longue... légalement c'est interdit mais on a tous nos anecdotes !",
-  49: "Quarante-neuf ! Un de moins que cinquante ! La poisse ou la chance, à vous de choisir !",
-  50: "Cinquante ! La moitié du siècle ! Comme certains membres du staff qui ne font pas leur âge !",
-  51: "Cinquante et un ! Passé la moitié ! L'espoir grandit, les cartons se remplissent !",
-  52: "Cinquante-deux ! Les semaines de l'année ! 52 semaines de dévouement au service des patients !",
-  53: "Cinquante-trois ! Un nombre premier ! Comme le talent de notre équipe soignante — unique !",
-  54: "Cinquante-quatre ! Double vingt-sept ! Deux fois la chaleur de Perpignan, deux fois plus chaud !",
-  55: "Cinquante-cinq ! Les deux pattes ! Comme courir après le médecin de garde dans le couloir !",
-  56: "Cinquante-six ! Un beau numéro ! Perpignan danse ce soir !",
-  57: "Cinquante-sept ! Heinz 57 variétés ! Comme les spécialités médicales disponibles au CH !",
-  58: "Cinquante-huit ! Presque soixante ! L'âge de la sagesse... et des genoux qui craquent !",
-  59: "Cinquante-neuf ! Une minute avant ! Comme arriver juste à temps en consultation !",
-  60: "Soixante ! La soixantaine ! L'âge d'or... et de la retraite dont tout le monde rêve !",
-  61: "Soixante et un ! La Moselle ! Loin de Perpignan... mais ce soir on est tous ensemble !",
-  62: "Soixante-deux ! Pas-de-Calais ! Encore plus loin ! Perpignan reste plus ensoleillé, c'est sûr !",
-  63: "Soixante-trois ! La grande famille du CH ! Soixante-trois raisons d'être fiers ce soir !",
-  64: "Soixante-quatre ! Les Pyrénées-Atlantiques ! Les cousins de l'autre côté des montagnes !",
-  65: "Soixante-cinq ! Les Hautes-Pyrénées ! Les montagnes qu'on voit depuis Perpignan par beau temps !",
-  66: "Soixante-six ! Notre département ! Les Pyrénées-Orientales ! On est à la maison, les amis !",
-  67: "Soixante-sept ! Le Bas-Rhin ! Les choucroutes contre la bouillabaisse... le Sud gagne toujours !",
-  68: "Soixante-huit ! Mai 68 ! Un vent de liberté... et de grèves. Certaines choses ne changent pas !",
-  69: "Soixante-neuf ! Lyon ! La capitale de la gastronomie... mais Perpignan a le meilleur soleil !",
-  70: "Soixante-dix ! Septuagénaire ! Bel âge ! Le CH soigne avec le même soin à tout âge !",
-  71: "Soixante et onze ! La Saône-et-Loire ! Le Beaujolais nouveau n'est pas encore arrivé, désolé !",
-  72: "Soixante-douze ! La Sarthe ! Le Mans, la course... mais ce soir on court après le carton plein !",
-  73: "Soixante-treize ! La Savoie ! Les montagnes enneigées... très loin du soleil catalan ce soir !",
-  74: "Soixante-quatorze ! La Haute-Savoie ! Chamonix, le Mont Blanc... et nos collines à nous !",
-  75: "Soixante-quinze ! Paris ! La capitale ! Mais le CH de Perpignan, lui, il a l'accent qui chante !",
-  76: "Soixante-seize ! La Seine-Maritime ! La Normandie du côté mer... nous on a la Méditerranée !",
-  77: "Soixante-dix-sept ! La Seine-et-Marne ! Fontainebleau la belle... et Perpignan la magnifique !",
-  78: "Soixante-dix-huit ! Les Yvelines ! Versailles, le château du roi... et l'hôpital, le palais du peuple !",
-  79: "Soixante-dix-neuf ! Les Deux-Sèvres ! Poitou-Charentes... les Charentaises et le soleil du midi !",
-  80: "Quatre-vingts ! La Somme ! Champs de bataille d'antan... aujourd'hui on se bat pour la santé !",
-  81: "Quatre-vingt-un ! Le Tarn ! Albi la rouge... et Perpignan la catalane et fière !",
-  82: "Quatre-vingt-deux ! Tarn-et-Garonne ! À mi-chemin entre Toulouse et nous — on leur pardonne !",
-  83: "Quatre-vingt-trois ! Le Var ! Toulon, la marine... et nos soignants qui naviguent entre les services !",
-  84: "Quatre-vingt-quatre ! Le Vaucluse ! Avignon, le pont... et nos patients qui traversent les couloirs !",
-  85: "Quatre-vingt-cinq ! La Vendée ! Le Puy du Fou... et notre loto du CH, aussi épique ce soir !",
-  86: "Quatre-vingt-six ! La Vienne ! Futuroscope du côté nord... ici on préfère regarder vers la mer !",
-  87: "Quatre-vingt-sept ! La Haute-Vienne ! Limoges, la porcelaine... fragile comme nos cartons ce soir !",
-  88: "Quatre-vingt-huit ! Les Vosges ! Les forêts de sapins... et nos soignants solides comme des chênes !",
-  89: "Quatre-vingt-neuf ! L'Yonne ! Bourgogne, les vins fins... ce soir on lève nos verres à la santé !",
-  90: "Quatre-vingt-dix ! Le dernier numéro ! Tout est sorti ! Quel joueur a le carton plein ? Bravo à tous !"
+  1:"Le numéro 1 ! Comme le CH de Perpignan — toujours le premier pour ses patients !",
+  2:"Le 2 ! Deux mains, deux pieds... et deux aspirines pour les soignants après une garde de nuit !",
+  3:"Le 3 ! Les trois mousquetaires : le médecin, l'infirmier, et la machine à café en panne !",
+  4:"Le 4 ! Quatre saisons à Perpignan : chaud, très chaud, encore chaud, et Noël !",
+  5:"Le 5 ! Cinq minutes de pause... c'est théorique aux urgences !",
+  6:"Le 6 ! Six heures du matin... l'heure où les infirmières de nuit comptent les secondes !",
+  7:"Le 7 ! Sept jours sur sept, l'hôpital ne ferme jamais. Chapeau les soignants !",
+  8:"Le 8 ! Comme les huit heures de sommeil dont tout le monde rêve ici !",
+  9:"Le 9 ! Numéro 9... comme la 9ème tasse de café de la journée — médicale celle-là !",
+  10:"Dix ! La dizaine ! Dix doigts pour soigner, dix fois merci à toute l'équipe !",
+  11:"Onze ! Les deux bâtons ! Deux piqûres de rappel... n'oubliez pas votre carnet de santé !",
+  12:"Douze ! La douzaine ! Autant de collègues qu'on aime autour de la table ce soir !",
+  13:"Treize ! Le chiffre porte-bonheur du CH de Perpignan — et ce soir ça va porter chance !",
+  14:"Quatorze ! Juillet, fête nationale ! On fête aussi les agents hospitaliers, héros du quotidien !",
+  15:"Quinze ! Un quart d'heure ! C'est le temps d'attente théorique aux urgences... théorique !",
+  16:"Seize ! L'âge de raison... pas forcément celui qu'on a en salle de garde !",
+  17:"Dix-sept ! Un de plus que seize, un de moins que dix-huit, parfaitement inutile comme information !",
+  18:"Dix-huit ! La majorité ! Ce soir tout le monde est majeur et vacciné... enfin j'espère !",
+  19:"Dix-neuf ! Juste avant la vingtaine ! Comme être en fin de garde — la fin approche !",
+  20:"Vingt ! La belle vingtaine ! Vingt ans de carrière ou vingt minutes de trajet — on prend les deux !",
+  21:"Vingt et un ! Blackjack ! Ce soir on mise sur le carton plein, pas sur le casino !",
+  22:"Vingt-deux ! Les deux canes ! Attention aux deux béquilles — le kiné prend note !",
+  23:"Vingt-trois ! Les voilà ! Vingt-trois heures... l'heure où la cafète ferme et la détresse commence !",
+  24:"Vingt-quatre ! 24h/24 comme l'hôpital ! Respect total à ceux qui assurent la nuit !",
+  25:"Vingt-cinq ! Noël avant l'heure ! Un cadeau pour les uns, une longue garde pour les autres !",
+  26:"Vingt-six ! Deux fois treize ! Double chance pour ce soir, on y croit !",
+  27:"Vingt-sept ! Presque trente ! Comme les températures à Perpignan... même en octobre !",
+  28:"Vingt-huit ! Les jours de février — le mois le plus court, comme certaines réunions... rarement !",
+  29:"Vingt-neuf ! L'année bissextile ! Un jour de plus par an pour souffler... quelle générosité !",
+  30:"Trente ! La trentaine ! Ni trop jeune ni trop vieux pour gagner ce carton plein !",
+  31:"Trente et un ! Le dernier jour du mois ! Encore une garde à assurer avant le repos !",
+  32:"Trente-deux ! Les dents ! Le dentiste du coin espère que vous avez bien brossé ce soir !",
+  33:"Trente-trois ! Dites trente-trois ! Classique... C'est la phrase préférée des médecins ici !",
+  34:"Trente-quatre ! Le département de l'Hérault, voisin de l'ennemi... mais on les aime quand même !",
+  35:"Trente-cinq ! Les 35 heures ! Un concept mystérieux pour certains soignants des urgences !",
+  36:"Trente-six ! Trente-six chandelles ! C'est ce qu'on voit parfois en fin de garde de 12 heures !",
+  37:"Trente-sept ! La température normale du corps ! Ce soir on est tous en bonne santé, parfait !",
+  38:"Trente-huit ! Légère fièvre ! Un doliprane et une bonne nuit — ordonnance offerte !",
+  39:"Trente-neuf ! Fièvre sérieuse ! Quelqu'un appelle les urgences ? On est au bon endroit !",
+  40:"Quarante ! La quarantaine ! COVID ou pas, on se souvient tous de ce mot maintenant !",
+  41:"Quarante et un ! Fièvre à 41 ! Là on s'inquiète... heureusement on est entourés de pros !",
+  42:"Quarante-deux ! La réponse à tout ! Merci Douglas Adams, et merci à l'équipe soignante !",
+  43:"Quarante-trois ! Trois petits tours et puis s'en vont... comme les visiteurs à l'heure des repas !",
+  44:"Quarante-quatre ! Les quatre-quatre ! Le véhicule du SMUR dans les Pyrénées-Orientales !",
+  45:"Quarante-cinq ! Mi-parcours ! On est à la moitié des 90 numéros. Tenez bon, gardez vos cartons !",
+  46:"Quarante-six ! Une belle annonce ! Le carton plein se prépare peut-être !",
+  47:"Quarante-sept ! Presque la cinquantaine ! Comme la première ride qu'on nie soigneusement !",
+  48:"Quarante-huit heures ! La garde la plus longue... légalement c'est interdit mais on a tous nos anecdotes !",
+  49:"Quarante-neuf ! Un de moins que cinquante ! La poisse ou la chance, à vous de choisir !",
+  50:"Cinquante ! La moitié du siècle ! Comme certains membres du staff qui ne font pas leur âge !",
+  51:"Cinquante et un ! Passé la moitié ! L'espoir grandit, les cartons se remplissent !",
+  52:"Cinquante-deux ! Les semaines de l'année ! 52 semaines de dévouement au service des patients !",
+  53:"Cinquante-trois ! Un nombre premier ! Comme le talent de notre équipe soignante — unique !",
+  54:"Cinquante-quatre ! Double vingt-sept ! Deux fois la chaleur de Perpignan, deux fois plus chaud !",
+  55:"Cinquante-cinq ! Les deux pattes ! Comme courir après le médecin de garde dans le couloir !",
+  56:"Cinquante-six ! Un beau numéro ! Perpignan danse ce soir !",
+  57:"Cinquante-sept ! Heinz 57 variétés ! Comme les spécialités médicales disponibles au CH !",
+  58:"Cinquante-huit ! Presque soixante ! L'âge de la sagesse... et des genoux qui craquent !",
+  59:"Cinquante-neuf ! Une minute avant ! Comme arriver juste à temps en consultation !",
+  60:"Soixante ! La soixantaine ! L'âge d'or... et de la retraite dont tout le monde rêve !",
+  61:"Soixante et un ! La Moselle ! Loin de Perpignan... mais ce soir on est tous ensemble !",
+  62:"Soixante-deux ! Pas-de-Calais ! Encore plus loin ! Perpignan reste plus ensoleillé, c'est sûr !",
+  63:"Soixante-trois ! La grande famille du CH ! Soixante-trois raisons d'être fiers ce soir !",
+  64:"Soixante-quatre ! Les Pyrénées-Atlantiques ! Les cousins de l'autre côté des montagnes !",
+  65:"Soixante-cinq ! Les Hautes-Pyrénées ! Les montagnes qu'on voit depuis Perpignan par beau temps !",
+  66:"Soixante-six ! Notre département ! Les Pyrénées-Orientales ! On est à la maison, les amis !",
+  67:"Soixante-sept ! Le Bas-Rhin ! Les choucroutes contre la bouillabaisse... le Sud gagne toujours !",
+  68:"Soixante-huit ! Mai 68 ! Un vent de liberté... et de grèves. Certaines choses ne changent pas !",
+  69:"Soixante-neuf ! Lyon ! La capitale de la gastronomie... mais Perpignan a le meilleur soleil !",
+  70:"Soixante-dix ! Septuagénaire ! Bel âge ! Le CH soigne avec le même soin à tout âge !",
+  71:"Soixante et onze ! La Saône-et-Loire ! Le Beaujolais nouveau n'est pas encore arrivé, désolé !",
+  72:"Soixante-douze ! La Sarthe ! Le Mans, la course... mais ce soir on court après le carton plein !",
+  73:"Soixante-treize ! La Savoie ! Les montagnes enneigées... très loin du soleil catalan ce soir !",
+  74:"Soixante-quatorze ! La Haute-Savoie ! Chamonix, le Mont Blanc... et nos collines à nous !",
+  75:"Soixante-quinze ! Paris ! La capitale ! Mais le CH de Perpignan, lui, il a l'accent qui chante !",
+  76:"Soixante-seize ! La Seine-Maritime ! La Normandie du côté mer... nous on a la Méditerranée !",
+  77:"Soixante-dix-sept ! La Seine-et-Marne ! Fontainebleau la belle... et Perpignan la magnifique !",
+  78:"Soixante-dix-huit ! Les Yvelines ! Versailles, le château du roi... et l'hôpital, le palais du peuple !",
+  79:"Soixante-dix-neuf ! Les Deux-Sèvres ! Poitou-Charentes... les Charentaises et le soleil du midi !",
+  80:"Quatre-vingts ! La Somme ! Champs de bataille d'antan... aujourd'hui on se bat pour la santé !",
+  81:"Quatre-vingt-un ! Le Tarn ! Albi la rouge... et Perpignan la catalane et fière !",
+  82:"Quatre-vingt-deux ! Tarn-et-Garonne ! À mi-chemin entre Toulouse et nous — on leur pardonne !",
+  83:"Quatre-vingt-trois ! Le Var ! Toulon, la marine... et nos soignants qui naviguent entre les services !",
+  84:"Quatre-vingt-quatre ! Le Vaucluse ! Avignon, le pont... et nos patients qui traversent les couloirs !",
+  85:"Quatre-vingt-cinq ! La Vendée ! Le Puy du Fou... et notre loto du CH, aussi épique ce soir !",
+  86:"Quatre-vingt-six ! La Vienne ! Futuroscope du côté nord... ici on préfère regarder vers la mer !",
+  87:"Quatre-vingt-sept ! La Haute-Vienne ! Limoges, la porcelaine... fragile comme nos cartons ce soir !",
+  88:"Quatre-vingt-huit ! Les Vosges ! Les forêts de sapins... et nos soignants solides comme des chênes !",
+  89:"Quatre-vingt-neuf ! L'Yonne ! Bourgogne, les vins fins... ce soir on lève nos verres à la santé !",
+  90:"Quatre-vingt-dix ! Le dernier numéro ! Tout est sorti ! Quel joueur a le carton plein ? Bravo à tous !"
 };
 
-// ─── Couleurs des boules par tranche ────────────────────────────────────────
+// ── Couleurs boules ──────────────────────────────────────────────────────────
 const couleurBoule = n => {
   if (n <= 15) return '#185FA5';
   if (n <= 30) return '#0F6E56';
@@ -466,11 +568,11 @@ const couleurBoule = n => {
   return '#854F0B';
 };
 
-// ─── État ────────────────────────────────────────────────────────────────────
+// ── État ─────────────────────────────────────────────────────────────────────
 let restants = Array.from({length:90}, (_, i) => i + 1);
 let tires = [];
 
-// ─── Init grille ─────────────────────────────────────────────────────────────
+// ── Init grille ──────────────────────────────────────────────────────────────
 function initGrille() {
   const g = document.getElementById('grille');
   g.innerHTML = '';
@@ -483,7 +585,7 @@ function initGrille() {
   }
 }
 
-// ─── Synthèse vocale ─────────────────────────────────────────────────────────
+// ── Synthèse vocale ──────────────────────────────────────────────────────────
 function parler(texte) {
   if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
@@ -498,48 +600,34 @@ function parler(texte) {
   window.speechSynthesis.speak(u);
 }
 
-// ─── Tirage ──────────────────────────────────────────────────────────────────
+// ── Tirage ───────────────────────────────────────────────────────────────────
 function tirerNumero() {
   if (restants.length === 0) return;
-
   const idx = Math.floor(Math.random() * restants.length);
   const n = restants.splice(idx, 1)[0];
   tires.push(n);
 
-  // Mettre à jour la boule précédente
   if (tires.length > 1) {
     const prev = tires[tires.length - 2];
     const bp = document.getElementById('b' + prev);
-    if (bp) {
-      bp.className = 'ball drawn';
-      bp.style.background = couleurBoule(prev);
-      bp.style.borderColor = couleurBoule(prev);
-    }
+    if (bp) { bp.className = 'ball drawn'; bp.style.background = couleurBoule(prev); bp.style.borderColor = couleurBoule(prev); }
   }
-
-  // Boule actuelle
   const bl = document.getElementById('b' + n);
-  if (bl) {
-    bl.className = 'ball last';
-    bl.style.background = '#D85A30';
-    bl.style.borderColor = '#D85A30';
-  }
+  if (bl) { bl.className = 'ball last'; bl.style.background = '#D85A30'; bl.style.borderColor = '#D85A30'; }
 
   document.getElementById('bigNum').textContent = n;
   document.getElementById('joke').textContent = blagues[n] || 'Le ' + n + ' !';
 
-  // Historique
   const hb = document.createElement('div');
   hb.className = 'hball';
   hb.style.background = couleurBoule(n);
   hb.textContent = n;
   document.getElementById('history').appendChild(hb);
 
-  // Annonce spéciale
   const ann = document.getElementById('announce');
   ann.className = 'announce';
   let special = '';
-  if (tires.length === 1)  special = 'Et c\'est parti ! Le premier numéro tombe !';
+  if (tires.length === 1) special = 'Et c\'est parti ! Le premier numéro tombe !';
   else if (tires.length === 45) special = 'Mi-chemin ! 45 numéros tirés !';
   else if (tires.length === 90) {
     special = 'Dernier numéro ! La partie est terminée !';
@@ -548,38 +636,30 @@ function tirerNumero() {
   }
   ann.textContent = special;
 
-  // Barre de progression
-  const pct = (tires.length / 90) * 100;
-  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressFill').style.width = (tires.length / 90 * 100) + '%';
   document.getElementById('counter').textContent = tires.length + ' / 90 numéros tirés';
 
-  // Parole
   parler(blagues[n] || 'Le numéro ' + n + ' !');
 }
 
-// ─── Annonces spéciales ───────────────────────────────────────────────────────
+// ── Annonces ─────────────────────────────────────────────────────────────────
 function annoncerQuine() {
   parler('QUINE ! Nous avons un QUINE ! Félicitations ! Une ligne complète au CH de Perpignan ! Bravo !');
   const a = document.getElementById('announce');
-  a.textContent = 'QUINE ! Bravo !';
-  a.className = 'announce quine';
+  a.textContent = 'QUINE ! Bravo !'; a.className = 'announce quine';
 }
-
 function annoncerDoubleQuine() {
   parler('DOUBLE QUINE ! Incroyable ! Deux lignes complètes ! Quel joueur extraordinaire ce soir !');
   const a = document.getElementById('announce');
-  a.textContent = 'DOUBLE QUINE ! Fantastique !';
-  a.className = 'announce quine';
+  a.textContent = 'DOUBLE QUINE ! Fantastique !'; a.className = 'announce quine';
 }
-
 function annoncerCarton() {
   parler('CARTON PLEIN ! CARTON PLEIN ! Nous avons un carton plein ce soir au loto du CH de Perpignan ! Toutes nos félicitations au gagnant ! Bravissimo !');
   const a = document.getElementById('announce');
-  a.textContent = 'CARTON PLEIN ! GAGNANT !';
-  a.className = 'announce carton';
+  a.textContent = 'CARTON PLEIN ! GAGNANT !'; a.className = 'announce carton';
 }
 
-// ─── Nouvelle partie ──────────────────────────────────────────────────────────
+// ── Nouvelle partie ───────────────────────────────────────────────────────────
 function rejouer() {
   restants = Array.from({length:90}, (_, i) => i + 1);
   tires = [];
@@ -597,7 +677,7 @@ function rejouer() {
   initGrille();
 }
 
-// ─── Démarrage ────────────────────────────────────────────────────────────────
+// ── Démarrage ─────────────────────────────────────────────────────────────────
 initGrille();
 setTimeout(() => {
   parler('Bonsoir et bienvenue au loto du CH de Perpignan ! Bonne chance à tout le monde ! Que le meilleur carton gagne ce soir !');
