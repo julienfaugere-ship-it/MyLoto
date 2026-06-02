@@ -101,6 +101,62 @@
       color: rgba(255,255,255,0.65);
       margin-top: 2px;
     }
+
+    /* ── DATE BADGE ─────────────────────────────────────────────── */
+    .header-date-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 6px 12px;
+      width: fit-content;
+    }
+    .header-date-badge .cal-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.2);
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .cal-icon .cal-top {
+      background: var(--orange);
+      height: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5px;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .cal-icon .cal-day {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .header-date-badge .date-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+    .header-date-badge .date-text span {
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+      display: block;
+      margin-top: 1px;
+    }
+
     .header-right {
       width: 190px;
       flex-shrink: 0;
@@ -135,6 +191,114 @@
     .drop1 { animation: rain-drop 1.4s ease-in infinite; }
     .drop2 { animation: rain-drop 1.4s ease-in 0.4s infinite; }
     .drop3 { animation: rain-drop 1.4s ease-in 0.8s infinite; }
+
+    /* ── PARTICIPANTS ────────────────────────────────────────────── */
+    .participants-bar {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .participants-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .participants-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .participants-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .participant {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: default;
+    }
+    .participant-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
+    }
+    .participant:hover .participant-avatar {
+      transform: scale(1.12) translateY(-2px);
+    }
+    .participant-avatar svg {
+      width: 52px;
+      height: 52px;
+    }
+    .participant-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    /* Couleurs par avatar */
+    .av-1 .av-circle { fill: #fce4ec; stroke: #e91e63; }
+    .av-1 .av-skin { fill: #f8d7b0; }
+    .av-1 .av-hair { fill: #4a2c17; }
+    .av-1 .av-body { fill: #e91e63; }
+
+    .av-2 .av-circle { fill: #e8eaf6; stroke: #3f51b5; }
+    .av-2 .av-skin { fill: #f5cba7; }
+    .av-2 .av-hair { fill: #2c1a0e; }
+    .av-2 .av-body { fill: #3f51b5; }
+
+    .av-3 .av-circle { fill: #e8f5e9; stroke: #4caf50; }
+    .av-3 .av-skin { fill: #fad7b4; }
+    .av-3 .av-hair { fill: #7b3f00; }
+    .av-3 .av-body { fill: #4caf50; }
+
+    .av-4 .av-circle { fill: #fff3e0; stroke: #ff9800; }
+    .av-4 .av-skin { fill: #f5cba7; }
+    .av-4 .av-hair { fill: #bf360c; }
+    .av-4 .av-body { fill: #ff9800; }
+
+    .av-5 .av-circle { fill: #fce4ec; stroke: #c2185b; }
+    .av-5 .av-skin { fill: #f8d7b0; }
+    .av-5 .av-hair { fill: #1a1a1a; }
+    .av-5 .av-body { fill: #c2185b; }
+
+    .av-6 .av-circle { fill: #e0f7fa; stroke: #00acc1; }
+    .av-6 .av-skin { fill: #fad7b4; }
+    .av-6 .av-hair { fill: #5d3a1a; }
+    .av-6 .av-body { fill: #00acc1; }
+
+    .av-7 .av-circle { fill: #f3e5f5; stroke: #9c27b0; }
+    .av-7 .av-skin { fill: #c68642; }
+    .av-7 .av-hair { fill: #1a0a00; }
+    .av-7 .av-body { fill: #9c27b0; }
+
+    .av-8 .av-circle { fill: #fff8e1; stroke: #ffc107; }
+    .av-8 .av-skin { fill: #f8d7b0; }
+    .av-8 .av-hair { fill: #6d4c41; }
+    .av-8 .av-body { fill: #ffc107; }
+
+    /* Homme */
+    .av-m .av-circle { fill: #e3f2fd; stroke: #185FA5; }
+    .av-m .av-skin { fill: #f5cba7; }
+    .av-m .av-hair { fill: #3e2723; }
+    .av-m .av-body { fill: #185FA5; }
 
     /* ── WISH BAR ───────────────────────────────────────────────── */
     .wish {
@@ -304,6 +468,23 @@
       100% { transform: scale(1); opacity: 1; }
     }
     .modal-bg.open .modal { animation: pop-in 0.3s cubic-bezier(.4,0,.2,1) both; }
+
+    /* ── ENTER ANIMATIONS ────────────────────────────────────────── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .participant {
+      animation: fade-up 0.4s cubic-bezier(.34,1.2,.64,1) both;
+    }
+    .participant:nth-child(1) { animation-delay: 0.05s; }
+    .participant:nth-child(2) { animation-delay: 0.10s; }
+    .participant:nth-child(3) { animation-delay: 0.15s; }
+    .participant:nth-child(4) { animation-delay: 0.20s; }
+    .participant:nth-child(5) { animation-delay: 0.25s; }
+    .participant:nth-child(6) { animation-delay: 0.30s; }
+    .participant:nth-child(7) { animation-delay: 0.35s; }
+    .participant:nth-child(8) { animation-delay: 0.40s; }
   </style>
 </head>
 <body>
@@ -316,10 +497,20 @@
         <div class="header-eyebrow">Centre Hospitalier de Perpignan</div>
         <div class="header-title">Soirée<br><span>Grande</span> Tombola</div>
         <div class="header-sub">Bonne chance à toute l'équipe du CH !</div>
+        <!-- DATE BADGE -->
+        <div class="header-date-badge">
+          <div class="cal-icon">
+            <div class="cal-top">AOÛT</div>
+            <div class="cal-day">21</div>
+          </div>
+          <div class="date-text">
+            Vendredi 21 août
+            <span>Rendez-vous de la soirée</span>
+          </div>
+        </div>
       </div>
       <div class="header-right" id="headerMeteo">
         <div class="meteo-icon" id="meteoSvg">
-          <!-- icône par défaut : soleil -->
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g class="sun-rays" stroke="rgba(255,220,60,0.85)" stroke-width="2.5" stroke-linecap="round">
               <line x1="32" y1="6" x2="32" y2="12"/>
@@ -340,6 +531,177 @@
           <div class="meteo-detail" id="meteoDetail"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- PARTICIPANTS -->
+  <div class="participants-bar">
+    <div class="participants-label"><i class="ti ti-users"></i> Les participants du soir</div>
+    <div class="participants-list">
+
+      <!-- Caroline — femme av-1 -->
+      <div class="participant">
+        <div class="participant-avatar av-1">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <!-- corps -->
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <!-- cou -->
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <!-- tête -->
+            <ellipse cx="26" cy="24" rx="10" ry="11" class="av-skin"/>
+            <!-- cheveux longs -->
+            <path d="M16 20 Q14 34 17 40 Q20 38 22 36 L22 30 Q17 28 16 20Z" class="av-hair"/>
+            <path d="M36 20 Q38 34 35 40 Q32 38 30 36 L30 30 Q35 28 36 20Z" class="av-hair"/>
+            <path d="M16 20 Q18 10 26 10 Q34 10 36 20 Q34 14 26 14 Q18 14 16 20Z" class="av-hair"/>
+            <!-- yeux -->
+            <circle cx="22" cy="23" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="23" r="1.5" fill="#1a1a1a"/>
+            <!-- sourire -->
+            <path d="M22 27 Q26 30 30 27" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Caroline</div>
+      </div>
+
+      <!-- Clément — homme -->
+      <div class="participant">
+        <div class="participant-avatar av-m">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <ellipse cx="26" cy="23" rx="10" ry="11" class="av-skin"/>
+            <!-- cheveux courts homme -->
+            <path d="M16 20 Q18 10 26 10 Q34 10 36 20 Q34 12 26 12 Q18 12 16 20Z" class="av-hair"/>
+            <circle cx="22" cy="23" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="23" r="1.5" fill="#1a1a1a"/>
+            <path d="M22 27 Q26 30 30 27" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Clément</div>
+      </div>
+
+      <!-- Charlotte 1 — femme av-3 -->
+      <div class="participant">
+        <div class="participant-avatar av-3">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <ellipse cx="26" cy="24" rx="10" ry="11" class="av-skin"/>
+            <path d="M16 20 Q14 34 17 40 Q20 38 22 36 L22 30 Q17 28 16 20Z" class="av-hair"/>
+            <path d="M36 20 Q38 34 35 40 Q32 38 30 36 L30 30 Q35 28 36 20Z" class="av-hair"/>
+            <path d="M16 20 Q18 10 26 10 Q34 10 36 20 Q34 14 26 14 Q18 14 16 20Z" class="av-hair"/>
+            <circle cx="22" cy="23" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="23" r="1.5" fill="#1a1a1a"/>
+            <path d="M22 27 Q26 30 30 27" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Charlotte</div>
+      </div>
+
+      <!-- Charlotte 2 — femme av-4 -->
+      <div class="participant">
+        <div class="participant-avatar av-4">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <ellipse cx="26" cy="24" rx="10" ry="11" class="av-skin"/>
+            <!-- cheveux mi-longs avec raie côté -->
+            <path d="M17 17 Q15 30 17 40 Q20 38 22 36 L22 30 Q17 28 17 17Z" class="av-hair"/>
+            <path d="M36 20 Q38 34 35 40 Q32 38 30 36 L30 30 Q35 28 36 20Z" class="av-hair"/>
+            <path d="M17 17 Q20 10 26 11 Q34 10 36 20 Q34 13 26 13 Q20 12 17 17Z" class="av-hair"/>
+            <circle cx="22" cy="23" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="23" r="1.5" fill="#1a1a1a"/>
+            <path d="M22 27 Q26 30 30 27" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Charlotte</div>
+      </div>
+
+      <!-- Oriane — femme av-5 -->
+      <div class="participant">
+        <div class="participant-avatar av-5">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <ellipse cx="26" cy="24" rx="10" ry="11" class="av-skin"/>
+            <path d="M16 20 Q14 34 17 40 Q20 38 22 36 L22 30 Q17 28 16 20Z" class="av-hair"/>
+            <path d="M36 20 Q38 34 35 40 Q32 38 30 36 L30 30 Q35 28 36 20Z" class="av-hair"/>
+            <path d="M16 20 Q18 10 26 10 Q34 10 36 20 Q34 14 26 14 Q18 14 16 20Z" class="av-hair"/>
+            <!-- chignon -->
+            <circle cx="26" cy="11" r="4" class="av-hair"/>
+            <circle cx="22" cy="23" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="23" r="1.5" fill="#1a1a1a"/>
+            <path d="M22 27 Q26 30 30 27" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Oriane</div>
+      </div>
+
+      <!-- Marianne — femme av-6 -->
+      <div class="participant">
+        <div class="participant-avatar av-6">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <ellipse cx="26" cy="24" rx="10" ry="11" class="av-skin"/>
+            <path d="M16 20 Q14 34 17 40 Q20 38 22 36 L22 30 Q17 28 16 20Z" class="av-hair"/>
+            <path d="M36 20 Q38 34 35 40 Q32 38 30 36 L30 30 Q35 28 36 20Z" class="av-hair"/>
+            <path d="M16 20 Q18 10 26 10 Q34 10 36 20 Q34 14 26 14 Q18 14 16 20Z" class="av-hair"/>
+            <circle cx="22" cy="23" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="23" r="1.5" fill="#1a1a1a"/>
+            <path d="M22 27 Q26 30 30 27" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Marianne</div>
+      </div>
+
+      <!-- Halima — femme av-7 -->
+      <div class="participant">
+        <div class="participant-avatar av-7">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <ellipse cx="26" cy="24" rx="10" ry="11" class="av-skin"/>
+            <!-- voile léger -->
+            <path d="M14 22 Q14 10 26 9 Q38 10 38 22 Q36 14 26 14 Q16 14 14 22Z" class="av-hair"/>
+            <path d="M14 22 Q12 30 14 38 Q18 36 18 30 L18 26 Z" class="av-hair"/>
+            <path d="M38 22 Q40 30 38 38 Q34 36 34 30 L34 26 Z" class="av-hair"/>
+            <circle cx="22" cy="24" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="24" r="1.5" fill="#1a1a1a"/>
+            <path d="M22 28 Q26 31 30 28" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Halima</div>
+      </div>
+
+      <!-- Marion — femme av-8 -->
+      <div class="participant">
+        <div class="participant-avatar av-8">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="25" class="av-circle" stroke-width="1.5"/>
+            <ellipse cx="26" cy="42" rx="13" ry="8" class="av-body"/>
+            <rect x="22" y="30" width="8" height="6" rx="2" class="av-skin"/>
+            <ellipse cx="26" cy="24" rx="10" ry="11" class="av-skin"/>
+            <path d="M16 20 Q14 34 17 40 Q20 38 22 36 L22 30 Q17 28 16 20Z" class="av-hair"/>
+            <path d="M36 20 Q38 34 35 40 Q32 38 30 36 L30 30 Q35 28 36 20Z" class="av-hair"/>
+            <path d="M16 20 Q18 10 26 10 Q34 10 36 20 Q34 14 26 14 Q18 14 16 20Z" class="av-hair"/>
+            <!-- petite frange -->
+            <path d="M18 16 Q22 14 26 14 Q30 14 34 16 Q30 18 26 17 Q22 18 18 16Z" class="av-hair"/>
+            <circle cx="22" cy="23" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="23" r="1.5" fill="#1a1a1a"/>
+            <path d="M22 27 Q26 30 30 27" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="participant-name">Marion</div>
+      </div>
+
     </div>
   </div>
 
